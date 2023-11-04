@@ -8,15 +8,18 @@ export default function TextForm(props) {
   const handleOnClick = () => {
     let newText = text.toUpperCase();
     setText(newText);
+    props.showAlert('converted to upper case','success')
   }
   const handleLoClick = () => {
     let newText = text.toLowerCase();
     setText(newText);
+    props.showAlert('converted to lower case','success')
   }
 
 const handleToClear = () => {
   let newText = ("");
   setText(newText);
+  props.showAlert('text cleard','success')
 }
 
   // Handler to update the text when the user types in the textarea
@@ -28,19 +31,22 @@ const handleToClear = () => {
     text.select();
     // text.setText(0,99999);
     navigator.clipboard.writeText(text.value)
+    props.showAlert('text copied','danger')
  }
  const handleExtraSpace=()=>{
     let newText =text.split(/[ ]+/);
     setText(newText.join(" "))
+    props.showAlert('extra space removed','success')
  }
   return (
     <>
-    <div className='container mx-4'>
+    <div className='container mx-4'style={{color:props.mode === 'dark'? 'white':'black'}}>
     <div className="mb-3 mx-5 my-4">
       <h1>{props.heading}</h1>
-      <div>
+      <div className='container'>
         {/* Use value and onChange to bind the textarea to the state */}
-        <textarea className='form-control' value={text} onChange={handleOnChange} id='mybox' rows='8'></textarea>
+        <textarea className='form-control' value={text} onChange={handleOnChange} style={{backgroundColor:props.mode === 'dark'? 'gray':'white',
+    color:props.mode === 'dark'? 'white':'black'}} id='mybox' rows='8'></textarea>
       </div>
       <button className='btn btn-primary mx-2 my-3' onClick={handleOnClick}>Convert to uppercase</button>
       <button className='btn btn-primary mx-2 my-3' onClick={handleLoClick}>Convert to lowerCase</button>
